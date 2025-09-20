@@ -24,4 +24,5 @@ class Book < ApplicationRecord
   def self.reading: () -> ActiveRecord::Relation
   def self.completed: () -> ActiveRecord::Relation
   def self.first: () -> Book?
+  def self.where: (*untyped) -> ActiveRecord::Relation
 end
