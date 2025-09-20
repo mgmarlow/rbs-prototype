@@ -1,24 +1,127 @@
-# README
+# Up and running with RBS in Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+RBS ships with Ruby, but actually type-checking the app requires
+[steep](https://github.com/soutaro/steep), a third-party gem.
 
-Things you may want to cover:
+- RBS files live in `sig/`
+- Only controllers, models, and services are currently typechecked
 
-* Ruby version
+## Initial setup
 
-* System dependencies
+1. `bundle add steep`
+1. `bundle binstubs steep`
+1. `bin/steep init`
+1. Create `Steepfile`
+1. Run `bin/steep check` to typecheck
 
-* Configuration
+Example `Steepfile`:
 
-* Database creation
+```rb
+target :app do
+  # Where are my RBS files? sig/
+  signature "sig"
 
-* Database initialization
+  # Only typecheck these directories/globs
+  check "app/controllers/**/*.rb"
+  check "app/models/**/*.rb"
+  check "app/services/**/*.rb"
 
-* How to run the test suite
+  # Use RBS files from these libraries
+  library "activesupport"
+  library "activemodel"
+  library "activerecord"
+  library "actionpack"
+  library "railties"
+end
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Note that `library` attempts to load RBS files for gems. Not all third-party
+libraries ship RBS files, so the [RBS
+collection](https://github.com/soutaro/steep/blob/master/guides/src/gem-rbs-collection/gem-rbs-collection.md)
+tool fills in missing files with community-maintained signaturesß.
 
-* Deployment instructions
+1. `rbs collection init`
+1. `rbs collection install`
 
-* ...
+List out dependencies in the `rbs_collection.yaml`:
+
+```yaml
+# ...
+gems:
+  - name: activesupport
+  - name: activemodel
+  - name: activerecord
+  - name: actionpack
+  - name: railties
+```
+
+## Tools
+
+Auto-generate first-pass RBS definitions w/ `rbs prototype`:
+
+```
+% rbs prototype rb app/models/book.rb
+class Book < ApplicationRecord
+end
+```
+
+(not very useful when the majority of implementation is ActiveRecord!)
+
+Better results when used with PORO service code:
+
+```
+% rbs prototype rb app/services/foo_service.rb
+class FooService
+  def run: () -> untyped
+end
+```
+
+Generally I've found Claude to do a better job generating RBS files for existing
+code.
+
+## Error messaging
+
+Here's an example error, `Book` does not define a method called
+`use_undefined_method`:
+
+```
+% bin/steep check
+# Type checking files:
+
+...F...
+
+app/services/foo_service.rb:4:9: [error] Type `(::Book | nil)` does not have method `use_undefined_method`
+│ Diagnostic ID: Ruby::NoMethod
+│
+└     book.use_undefined_method
+           ~~~~~~~~~~~~~~~~~~~~
+
+Detected 2 problems from 1 file
+```
+
+## Other tools attempted
+
+[rbs_rails](https://github.com/pocke/rbs_rails), unofficial Rails signature
+generator:
+
+1. `bundle add rbs_rails`
+1. `bin/rails g rbs_rails:install`
+1. `bin/rails rbs_rails:all`
+
+This gem is very verbose and didn't generate _everything_ out-of-the-box. There
+have been a lot of upstream changes merged that haven't yet been released, so
+perhaps the quality of this gem will improve within a month or so (based on
+Github Issue discussions). That said, it does seem very useful to auto-generate
+ActiveRecord models since they have such a huge number of built-in methods that
+we'd otherwise need to implement one-by-one.
+
+## Future work
+
+- Run `bin/steep check` in CI.
+- Explore [typeprof](https://github.com/ruby/typeprof) and LSP integration
+
+## Additional resources
+
+- https://rubykaigi.org/2025/presentations/sinsoku_listy.html
+- https://rubykaigi.org/2025/presentations/mametter.html
+- https://rubykaigi.org/2023/presentations/p_ck_.html

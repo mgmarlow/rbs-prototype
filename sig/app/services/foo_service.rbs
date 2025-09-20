@@ -1,0 +1,3 @@
+class FooService
+  def run: () -> nil
+end

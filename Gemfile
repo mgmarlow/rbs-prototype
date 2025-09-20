@@ -44,4 +44,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "steep", "~> 1.10"
+
+  gem "faker", "~> 3.5"
+
+  gem "rbs_rails", require: false
 end
