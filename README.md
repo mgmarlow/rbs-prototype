@@ -117,7 +117,6 @@ we'd otherwise need to implement one-by-one.
 
 ## Future work
 
-- Run `bin/steep check` in CI.
 - Explore [typeprof](https://github.com/ruby/typeprof) and LSP integration
 
 ## Additional resources
