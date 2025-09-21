@@ -1,6 +1,6 @@
 class FooService
   def run
-    book_a = Book.where(title: "Foo Bar")
+    book_a = Book.find_by(title: "Foo Bar")
     book_b = Book
       .where(status: :completed)
       .where("updated_at < ?", Date.current)
