@@ -8,11 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-10.times { Author.create!(name: Faker::Book.author) }
-
-20.times do
+10.times do
   Book.create!(
     title: Faker::Book.title,
-    author: Author.order("RANDOM()").limit(1).first
+    author: Faker::Book.author,
+    status: :to_read
   )
 end

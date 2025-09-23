@@ -2,10 +2,12 @@
 
 one:
   title: MyString
+  author: MyString
+  description: MyString
   status: 1
-  author: one
 
 two:
   title: MyString
+  author: MyString
+  description: MyString
   status: 1
-  author: two

@@ -1,15 +1,6 @@
 target :app do
   signature "sig"
-
-  check "app/controllers/**/*.rb"
-  check "app/models/**/*.rb"
-  check "app/services/**/*.rb"
-
-  library "activesupport"
-  library "activemodel"
-  library "activerecord"
-  library "actionpack"
-  library "railties"
+  check "app"
 end
 
 # Auto-generated from bin/steep init:

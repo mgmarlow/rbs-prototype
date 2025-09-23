@@ -1,0 +1,44 @@
+class ApplicationController < ActionController::API
+end
+
+class BooksController < ApplicationController
+  @books: ActiveRecord::Relation
+
+  @book: Book
+
+  # GET /books
+  def index: () -> untyped
+
+  # GET /books/1
+  def show: () -> untyped
+
+  # POST /books
+  def create: () -> untyped
+
+  # PATCH/PUT /books/1
+  def update: () -> untyped
+
+  # DELETE /books/1
+  def destroy: () -> untyped
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book: () -> untyped
+
+  # Only allow a list of trusted parameters through.
+  def book_params: () -> untyped
+end
+
+class ApplicationJob < ActiveJob::Base
+end
+
+class ApplicationMailer < ActionMailer::Base
+end
+
+class ApplicationRecord < ActiveRecord::Base
+end
+
+class Book < ApplicationRecord
+  def self.finished: () -> ActiveRecord::Relation
+end

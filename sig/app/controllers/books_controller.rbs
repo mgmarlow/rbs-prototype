@@ -1,3 +1,0 @@
-class BooksController < ApplicationController
-  def index: () -> void
-end
