@@ -137,10 +137,6 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: dbm
-  version: '0'
-  source:
-    type: stdlib
 - name: delegate
   version: '0'
   source:
@@ -294,14 +290,6 @@ gems:
   source:
     type: stdlib
 - name: prettyprint
-  version: '0'
-  source:
-    type: stdlib
-- name: pstore
-  version: '0'
-  source:
-    type: stdlib
-- name: psych
   version: '0'
   source:
     type: stdlib

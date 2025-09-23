@@ -18,20 +18,13 @@ Example `Steepfile`:
 
 ```rb
 target :app do
-  # Where are my RBS files? sig/
   signature "sig"
 
-  # Only typecheck these directories/globs
-  check "app/controllers/**/*.rb"
-  check "app/models/**/*.rb"
-  check "app/services/**/*.rb"
-
-  # Use RBS files from these libraries
-  library "activesupport"
-  library "activemodel"
-  library "activerecord"
-  library "actionpack"
-  library "railties"
+  check "app"
+  # Alternatively
+  # check "app/controllers/**/*.rb"
+  # check "app/models/**/*.rb"
+  # check "app/services/**/*.rb"
 end
 ```
 
@@ -42,18 +35,6 @@ tool fills in missing files with community-maintained signaturesß.
 
 1. `rbs collection init`
 1. `rbs collection install`
-
-List out dependencies in the `rbs_collection.yaml`:
-
-```yaml
-# ...
-gems:
-  - name: activesupport
-  - name: activemodel
-  - name: activerecord
-  - name: actionpack
-  - name: railties
-```
 
 ## Tools
 
